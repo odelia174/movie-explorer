@@ -1,4 +1,6 @@
+import { Link } from 'react-router';
 import type { Show } from '../types/show';
+import GenreList from './GenreList';
 
 interface ShowCardProps {
   show: Show;
@@ -6,7 +8,7 @@ interface ShowCardProps {
 
 function ShowCard({ show }: ShowCardProps) {
   return (
-    <article className="show-card">
+    <Link to={`/items/${show.id}`} className="show-card">
       {show.imageUrl ? (
         <img className="show-card__image" src={show.imageUrl} alt={show.name} />
       ) : (
@@ -16,17 +18,13 @@ function ShowCard({ show }: ShowCardProps) {
       <div className="show-card__body">
         <h2 className="show-card__title">{show.name}</h2>
 
-        <ul className="show-card__genres">
-          {show.genres.map((genre) => (
-            <li key={genre}>{genre}</li>
-          ))}
-        </ul>
+        <GenreList genres={show.genres} />
 
         <p className="show-card__rating">
           {show.rating !== null ? `★ ${show.rating.toFixed(1)}` : 'No rating'}
         </p>
       </div>
-    </article>
+    </Link>
   );
 }
 

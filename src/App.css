@@ -1,3 +1,42 @@
+/* Navigation bar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar__brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 8px;
+}
+
+.navbar__link {
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.navbar__link:hover {
+  color: var(--text-h);
+}
+
+/* NavLink adds the "active" class when its page is open */
+.navbar__link.active {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
 /* Page layout */
 .app {
   padding: 24px 20px 48px;
@@ -12,7 +51,7 @@
   text-align: start;
 }
 
-/* Show card */
+/* Show card (the whole card is a link to the details page) */
 .show-card {
   display: flex;
   flex-direction: column;
@@ -21,6 +60,21 @@
   overflow: hidden;
   background: var(--bg);
   box-shadow: var(--shadow);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+
+.show-card:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-3px);
+}
+
+.show-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .show-card__image {
@@ -49,7 +103,13 @@
   font-size: 18px;
 }
 
-.show-card__genres {
+.show-card__rating {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+/* Genre tags (used in the card and in the details page) */
+.genre-list {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -58,7 +118,7 @@
   list-style: none;
 }
 
-.show-card__genres li {
+.genre-list li {
   padding: 2px 8px;
   border-radius: 999px;
   font-size: 13px;
@@ -66,9 +126,73 @@
   background: var(--accent-bg);
 }
 
-.show-card__rating {
+/* "Back to shows" link */
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Show details page */
+.show-details {
+  text-align: start;
+}
+
+.show-details__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.show-details__image {
+  width: 260px;
+  max-width: 100%;
+  flex-shrink: 0;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.show-details__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.show-details__info h1 {
+  margin: 0;
+}
+
+.show-details__rating {
+  font-size: 20px;
   font-weight: 600;
   color: var(--text-h);
+}
+
+/* "Show not found" message */
+.not-found {
+  padding-block: 48px;
+}
+
+.not-found p {
+  margin-bottom: 16px;
+}
+
+/* Medium screens: stack the poster above the details */
+@media (max-width: 640px) {
+  .show-details__content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .show-details__image {
+    width: 200px;
+    align-self: center;
+  }
 }
 
 /* Narrow screens (phones): two smaller columns */

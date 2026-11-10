@@ -1,21 +1,21 @@
-import ShowCard from './components/ShowCard';
-import { shows } from './data/shows';
+import { Route, Routes } from 'react-router';
+import NavBar from './components/NavBar';
+import ShowsPage from './pages/ShowsPage';
+import ShowDetailsPage from './pages/ShowDetailsPage';
 import './App.css';
 
 function App() {
   return (
-    <main className="app">
-      <header>
-        <h1>Movie Explorer</h1>
-        <p>Discover TV shows</p>
-      </header>
+    <>
+      <NavBar />
 
-      <section className="show-list">
-        {shows.map((show) => (
-          <ShowCard key={show.id} show={show} />
-        ))}
-      </section>
-    </main>
+      <main className="app">
+        <Routes>
+          <Route path="/" element={<ShowsPage />} />
+          <Route path="/items/:id" element={<ShowDetailsPage />} />
+        </Routes>
+      </main>
+    </>
   );
 }
 
