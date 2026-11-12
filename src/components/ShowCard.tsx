@@ -10,7 +10,12 @@ function ShowCard({ show }: ShowCardProps) {
   return (
     <Link to={`/items/${show.id}`} className="show-card">
       {show.imageUrl ? (
-        <img className="show-card__image" src={show.imageUrl} alt={show.name} />
+        <img
+          className="show-card__image"
+          src={show.imageUrl}
+          alt={show.name}
+          loading="lazy"
+        />
       ) : (
         <div className="show-card__image show-card__image--empty">No image</div>
       )}

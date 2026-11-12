@@ -173,6 +173,56 @@
   color: var(--text-h);
 }
 
+.show-details__status strong {
+  color: var(--text-h);
+}
+
+.show-details__summary {
+  max-width: 65ch;
+  line-height: 1.6;
+}
+
+/* Loading and error messages */
+.status-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-block: 48px;
+}
+
+.status-message--error {
+  margin-block: 24px;
+  padding: 24px 16px;
+  border: 1px solid #e5484d;
+  border-radius: 12px;
+  background: rgba(229, 72, 77, 0.08);
+}
+
+.status-message__title {
+  font-weight: 600;
+  color: #e5484d;
+}
+
+.status-message__details {
+  font-size: 14px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* "Show not found" message */
 .not-found {
   padding-block: 48px;

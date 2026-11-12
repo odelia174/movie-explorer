@@ -4,4 +4,6 @@ export interface Show {
     genres: string[];
     rating: number | null;
     imageUrl: string | null;
+    summary: string | null;
+    status: string;
   }
