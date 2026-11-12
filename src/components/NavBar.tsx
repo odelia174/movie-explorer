@@ -20,6 +20,9 @@ function NavBar() {
             <span className="navbar__count">{favorites.length}</span>
           )}
         </NavLink>
+        <NavLink to="/compare" className="navbar__link">
+          Compare
+        </NavLink>
       </div>
     </nav>
   );
