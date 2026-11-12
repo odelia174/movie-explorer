@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { API_BASE_URL, toShow } from '../api/tvmaze';
 import ErrorMessage from '../components/ErrorMessage';
+import FavoriteButton from '../components/FavoriteButton';
 import GenreList from '../components/GenreList';
 import LoadingMessage from '../components/LoadingMessage';
 import type { Show } from '../types/show';
@@ -110,6 +111,8 @@ function ShowDetailsPage() {
           <p className="show-details__status">
             Status: <strong>{show.status}</strong>
           </p>
+
+          <FavoriteButton show={show} withText />
 
           <p className="show-details__summary">
             {show.summary ?? 'No summary available.'}

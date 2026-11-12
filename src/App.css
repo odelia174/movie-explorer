@@ -1,9 +1,10 @@
 /* Navigation bar */
 .navbar {
   display: flex;
+  flex-wrap: wrap; /* very narrow phones: links move under the name */
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px 16px;
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);
 }
@@ -37,6 +38,17 @@
   background: var(--accent-bg);
 }
 
+/* Number of favorites next to the "Favorites" link */
+.navbar__count {
+  margin-inline-start: 6px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+}
+
 /* Page layout */
 .app {
   padding: 24px 20px 48px;
@@ -51,8 +63,9 @@
   text-align: start;
 }
 
-/* Show card (the whole card is a link to the details page) */
+/* Show card: a link to the details page, with a favorite button on top */
 .show-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
@@ -60,8 +73,6 @@
   overflow: hidden;
   background: var(--bg);
   box-shadow: var(--shadow);
-  color: inherit;
-  text-decoration: none;
   transition:
     transform 0.2s,
     border-color 0.2s;
@@ -72,7 +83,20 @@
   transform: translateY(-3px);
 }
 
-.show-card:focus-visible {
+.show-card__link {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Keyboard focus on the link outlines the whole card */
+.show-card__link:focus-visible {
+  outline: none;
+}
+
+.show-card:has(.show-card__link:focus-visible) {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -106,6 +130,56 @@
 .show-card__rating {
   font-weight: 600;
   color: var(--text-h);
+}
+
+/* Favorite button: ♡ = not saved, ♥ = saved */
+.favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  font: inherit;
+  color: var(--accent);
+  background: var(--bg);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.favorite-button:hover {
+  background: var(--accent-bg);
+}
+
+.favorite-button--active,
+.favorite-button--active:hover {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent);
+}
+
+.favorite-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Round heart in the top corner of a card */
+.show-card .favorite-button {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  line-height: 1;
+  box-shadow: var(--shadow);
+}
+
+/* Heart with text in the details page */
+.favorite-button--with-text {
+  align-self: flex-start;
+  padding: 8px 18px;
+  font-size: 16px;
 }
 
 /* Genre tags (used in the card and in the details page) */
@@ -320,7 +394,9 @@
   color: var(--text-h);
 }
 
-.clear-button {
+/* Button-style actions: "Clear search and filters", "Browse shows" */
+.clear-button,
+.link-button {
   padding: 8px 16px;
   border: 1px solid var(--accent-border);
   border-radius: 8px;
@@ -328,10 +404,12 @@
   font-size: 15px;
   color: var(--accent);
   background: var(--accent-bg);
+  text-decoration: none;
   cursor: pointer;
 }
 
-.clear-button:hover {
+.clear-button:hover,
+.link-button:hover {
   border-color: var(--accent);
 }
 
