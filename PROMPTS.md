@@ -161,3 +161,61 @@
 > <status>completed</status>
 > <summary>Background command "Install jsdom in a scratch folder for verification" completed (exit code 0)</summary>
 > </task-notification>
+
+## 2026-11-12
+
+**13:30 · claude**
+
+> <ide_opened_file>The user opened the file c:\Users\odeli\Desktop\movie-explorer\tasks.md in the IDE. This may or may not be related to the current task.</ide_opened_file>
+> 
+> 
+> <pasted_content id="e271">
+> אנחנו ממשיכים בפרויקט Movie Explorer.
+> 
+> משימות 1, 2 ו־3 הושלמו, נבדקו ונשמרו ב־GitHub, עם Commit נפרד לכל משימה.
+> 
+> קרא תחילה את AGENTS.md, PRD.md ו־tasks.md.
+> 
+> בצע עכשיו רק את משימה 4 — בדיקות אוטומטיות עם Vitest, בדיוק לפי הדרישות שב־tasks.md.
+> 
+> דרישות:
+> 
+> 1. התקן והגדר Vitest ואת @vitest/ui, יחד עם התלויות הנוספות הנחוצות.
+> 
+> 2. כתוב לפחות 5 בדיקות אוטומטיות ללוגיקה אמיתית שכבר קיימת בפרויקט. אל תכתוב בדיקות מלאכותיות רק כדי להגיע למספר 5.
+> 
+> 3. העדף לבדוק פונקציות קיימות, למשל המרת נתונים מה־TVmaze API למבנה Show, טיפול בנתונים חסרים והסרת תגיות HTML מהתקציר.
+> 
+> 4. אם פונקציות קיימות אינן נגישות לבדיקות, בצע רק שינוי קטן והכרחי כדי לאפשר לבדוק אותן.
+> 
+> 5. הגדר פקודת npm test להרצת הבדיקות, ופקודה לפתיחת Vitest UI.
+> 
+> 6. הרץ בפועל את כל הבדיקות וודא שכולן עוברות.
+> 
+> 7. ודא שגם npm run build ו־npm run lint עוברים ללא שגיאות.
+> 
+> 8. הסבר לי בעברית פשוטה מה כל בדיקה בודקת, למה היא חשובה ואיך אפשר להריץ אותה בעצמי.
+> 
+> חשוב מאוד:
+> - בצע רק את משימה 4.
+> - אל תוסיף חיפוש, מועדפים או השוואת סדרות.
+> - אל תשנה את העיצוב או את ההתנהגות הקיימת של האתר, אלא אם זה הכרחי לבדיקות.
+> - אל תבצע Commit או Push בעצמך.
+> - אל תשנה את PROMPTS.md ידנית. ודא שהפרומפט נרשם אוטומטית.
+> - אל תשנה את קובצי התבנית של המרצה.
+> - אין צורך לסמן [x] או לכתוב "הושלם" ב־tasks.md.
+> 
+> בסיום הצג את שמות קובצי הבדיקות, מספר הבדיקות שעברו, הפקודות להרצתן וכל הקבצים ששונו.
+> 
+> עצור לאחר השלמת משימה 4.
+> </pasted_content id="e271">
+
+**13:35 · claude**
+
+> <task-notification>
+> <task-id>b70qutymq</task-id>
+> <tool-use-id>toolu_01R4ewfKwGENhKxy1MwwauxV</tool-use-id>
+> <output-file>C:\Users\odeli\AppData\Local\Temp\claude\eebada8eaf2ed89f\c2503f5e-6106-4ade-9d38-2fc0aa952c1e\tasks\b70qutymq.output</output-file>
+> <status>completed</status>
+> <summary>Background command "Install Vitest and Vitest UI as dev dependencies" completed (exit code 0)</summary>
+> </task-notification>
