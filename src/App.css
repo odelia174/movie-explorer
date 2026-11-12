@@ -1,15 +1,22 @@
-/* Navigation bar */
+/* Navigation bar — stays at the top of the screen while scrolling */
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  flex-wrap: wrap; /* very narrow phones: links move under the name */
+  flex-wrap: wrap; /* narrow phones: links move under the name */
   align-items: center;
   justify-content: space-between;
-  gap: 8px 16px;
-  padding: 16px 20px;
+  gap: 4px 16px;
+  padding: 8px 20px;
   border-bottom: 1px solid var(--border);
+  background: var(--bg);
 }
 
 .navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* comfortable to tap */
   font-size: 20px;
   font-weight: 700;
   color: var(--text-h);
@@ -18,18 +25,33 @@
 
 .navbar__links {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 
 .navbar__link {
-  padding: 6px 12px;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* comfortable to tap */
+  padding: 0 14px;
+  border-radius: 8px;
   color: var(--text);
   text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .navbar__link:hover {
   color: var(--text-h);
+  background: var(--code-bg);
+}
+
+.navbar__brand:focus-visible,
+.navbar__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* NavLink adds the "active" class when its page is open */
@@ -40,11 +62,15 @@
 
 /* Number of favorites next to the "Favorites" link */
 .navbar__count {
+  min-width: 20px;
   margin-inline-start: 6px;
-  padding: 0 7px;
+  padding: 0 6px;
+  box-sizing: border-box;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
+  line-height: 20px;
+  text-align: center;
   color: #fff;
   background: var(--accent);
 }
@@ -78,9 +104,12 @@
     border-color 0.2s;
 }
 
-.show-card:hover {
-  border-color: var(--accent-border);
-  transform: translateY(-3px);
+/* Lift effect only on devices with a mouse (on phones it would "stick" after a tap) */
+@media (hover: hover) {
+  .show-card:hover {
+    border-color: var(--accent-border);
+    transform: translateY(-3px);
+  }
 }
 
 .show-card__link {
@@ -106,6 +135,7 @@
   width: 100%;
   aspect-ratio: 210 / 295;
   object-fit: cover;
+  background: var(--code-bg); /* gray box while the poster loads */
 }
 
 .show-card__image--empty {
@@ -117,6 +147,7 @@
 
 .show-card__body {
   display: flex;
+  flex: 1; /* fill the card, so the rating can sit at the bottom */
   flex-direction: column;
   gap: 8px;
   padding: 12px 16px 16px;
@@ -125,9 +156,12 @@
 .show-card__title {
   margin: 0;
   font-size: 18px;
+  line-height: 1.3;
 }
 
+/* Pushed to the bottom: ratings line up across a row of cards */
 .show-card__rating {
+  margin-top: auto;
   font-weight: 600;
   color: var(--text-h);
 }
@@ -168,8 +202,8 @@
   position: absolute;
   top: 8px;
   inset-inline-end: 8px;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   font-size: 20px;
   line-height: 1;
   box-shadow: var(--shadow);
@@ -178,7 +212,8 @@
 /* Heart with text in the details page */
 .favorite-button--with-text {
   align-self: flex-start;
-  padding: 8px 18px;
+  min-height: 44px;
+  padding: 0 20px;
   font-size: 16px;
 }
 
@@ -202,8 +237,10 @@
 
 /* "Back to shows" link */
 .back-link {
-  display: inline-block;
-  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* comfortable to tap */
+  margin-bottom: 12px;
   color: var(--accent);
   text-decoration: none;
 }
@@ -317,6 +354,11 @@
     width: 200px;
     align-self: center;
   }
+
+  /* Full-width button: easy to reach with a thumb */
+  .favorite-button--with-text {
+    align-self: stretch;
+  }
 }
 
 /* Search box and genre filter */
@@ -348,7 +390,7 @@
 
 .search-bar__input {
   width: 100%;
-  padding-inline-end: 44px; /* room for the clear button */
+  padding-inline-end: 48px; /* room for the clear button */
 }
 
 /* Hide the browser's own clear button — we show our own */
@@ -367,10 +409,10 @@
 .search-bar__clear {
   position: absolute;
   top: 50%;
-  inset-inline-end: 8px;
+  inset-inline-end: 4px;
   transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 50%;
   font-size: 14px;
@@ -399,7 +441,10 @@
 /* Button-style actions: "Clear search and filters", "Browse shows" */
 .clear-button,
 .link-button {
-  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
   border: 1px solid var(--accent-border);
   border-radius: 8px;
   font: inherit;
@@ -467,8 +512,9 @@
 }
 
 .compare-remove {
+  min-height: 44px;
   margin-top: 8px;
-  padding: 4px 10px;
+  padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: 6px;
   font: inherit;
@@ -509,7 +555,7 @@
 
 .compare-table__name {
   display: block;
-  margin-top: 8px;
+  padding-block: 11px; /* bigger area to tap */
   font-weight: 600;
   color: var(--text-h);
   text-decoration: none;
@@ -551,10 +597,37 @@
   font-size: 20px;
 }
 
-/* Narrow screens (phones): two smaller columns */
+/* Narrow screens (phones) */
 @media (max-width: 480px) {
+  /* Menu: name on top, the links share the full width below it */
+  .navbar {
+    padding: 4px 12px 8px;
+  }
+
+  .navbar__brand {
+    font-size: 18px;
+  }
+
+  .navbar__links {
+    width: 100%;
+  }
+
+  .navbar__link {
+    flex: 1;
+    padding: 0 8px;
+  }
+
   .app {
     padding: 16px 12px 32px;
+  }
+
+  /* More room for the show name inside the compare dropdowns */
+  .show-picker__select {
+    padding: 0 6px;
+  }
+
+  .genre-list li {
+    font-size: 12px;
   }
 
   .genre-filter {
@@ -587,5 +660,22 @@
 
   .show-card__title {
     font-size: 16px;
+  }
+}
+
+/* Users who turned on "reduce motion" in their system settings */
+@media (prefers-reduced-motion: reduce) {
+  .show-card,
+  .navbar__link,
+  .favorite-button {
+    transition: none;
+  }
+
+  .show-card:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation-duration: 2s;
   }
 }
