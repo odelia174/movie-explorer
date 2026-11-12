@@ -245,10 +245,104 @@
   }
 }
 
+/* Search box and genre filter */
+.show-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.search-bar {
+  position: relative;
+  flex: 1 1 260px;
+}
+
+.search-bar__input,
+.genre-filter {
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 16px; /* 16px stops phones from zooming in on focus */
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.search-bar__input {
+  width: 100%;
+  padding-inline-end: 44px; /* room for the clear button */
+}
+
+/* Hide the browser's own clear button — we show our own */
+.search-bar__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-bar__input:focus,
+.genre-filter:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.search-bar__clear {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 8px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  cursor: pointer;
+}
+
+.genre-filter {
+  flex: 0 1 200px;
+  cursor: pointer;
+}
+
+.results-count {
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: start;
+}
+
+/* "No shows match" message */
+.empty-message__title {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.clear-button {
+  padding: 8px 16px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  border-color: var(--accent);
+}
+
 /* Narrow screens (phones): two smaller columns */
 @media (max-width: 480px) {
   .app {
     padding: 16px 12px 32px;
+  }
+
+  .genre-filter {
+    flex-basis: 100%;
   }
 
   .show-list {
