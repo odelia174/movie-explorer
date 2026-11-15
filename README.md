@@ -1,75 +1,103 @@
-# React + TypeScript + Vite
+# Movie Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+אפליקציית React לגילוי סדרות טלוויזיה, שנבנתה כפרויקט גמר בקורס React.
+כל הנתונים מגיעים בזמן אמת מ-[TVmaze API](https://www.tvmaze.com/api).
 
-Currently, two official plugins are available:
+## מטרת הפרויקט
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+לאפשר למשתמש לעיין ברשימת סדרות, לחפש ולסנן אותן, לפתוח עמוד פרטים לכל סדרה, לשמור סדרות במועדפים ולהשוות בין שתי סדרות.
+הדרישות המלאות נמצאות ב-[PRD.md](PRD.md), ותוכנית העבודה ב-[tasks.md](tasks.md).
 
-## React Compiler
+## טכנולוגיות
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| טכנולוגיה | שימוש |
+|---|---|
+| **React 19** + **TypeScript** | ממשק המשתמש, עם טיפוסים לכל הנתונים וה-props (בלי `any`) |
+| **Vite** | שרת פיתוח ובניית גרסת production |
+| **React Router** | ניווט בין העמודים (`Link`, `NavLink`, `useParams`) |
+| **TVmaze API** | מקור הנתונים: `fetch` בתוך `useEffect` |
+| **Vitest** + **Vitest UI** | בדיקות אוטומטיות |
+| **CSS** (Grid, Flexbox, media queries) | עיצוב רספונסיבי למחשב, טאבלט וטלפון |
+| **localStorage** | שמירת המועדפים בדפדפן |
+| **ESLint** | בדיקת איכות קוד |
 
-## Expanding the ESLint configuration
+## עמודים ופונקציות מרכזיות
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| נתיב | עמוד | מה אפשר לעשות |
+|---|---|---|
+| `/` | **רשימת סדרות** | 240 סדרות מ-TVmaze עם תמונה, שם, ז'אנרים ודירוג. **חיפוש** לפי שם, **סינון** לפי ז'אנר, ושניהם יחד. כשאין תוצאות מוצגת הודעה עם כפתור ניקוי. |
+| `/items/:id` | **פרטי סדרה** | תמונה, תקציר, ז'אנרים, דירוג וסטטוס. הוספה והסרה מהמועדפים. לסדרה שלא קיימת מוצגת ההודעה "Show not found". |
+| `/favorites` | **מועדפים** | הסדרות שנשמרו, עם אפשרות להסיר. המועדפים נשמרים ב-localStorage, כך שהם נשארים גם אחרי רענון. כשהרשימה ריקה מוצגת הודעה עם קישור לרשימת הסדרות. |
+| `/compare` | **השוואת סדרות** | בחירה של שתי סדרות **שונות** והצגה שלהן זו לצד זו: דירוג, ז'אנרים וסטטוס. הדירוג הגבוה מסומן, ומוצג סיכום עם הז'אנרים המשותפים. |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+בנוסף:
+- **מועדפים מכל מקום:** כפתור ♡ בכל כרטיס סדרה ובעמוד הפרטים, ומונה מועדפים בתפריט הניווט.
+- **מצבי טעינה ושגיאה:** בזמן הטעינה מוצגת הודעת Loading, ואם הבקשה ל-API נכשלת מוצגת הודעת שגיאה.
+- **עיצוב רספונסיבי:** בטלפון הכרטיסים מוצגים בשתי עמודות והתפריט בשתי שורות. אין גלילה אופקית, וכל הכפתורים בגודל נוח ללחיצה.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## התקנה והרצה
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**דרישות:** [Node.js](https://nodejs.org) בגרסה 22.12 ומעלה (הפרויקט פותח על Node 24), וחיבור לאינטרנט, כי הנתונים מגיעים מ-TVmaze.
 
+```bash
+git clone https://github.com/odelia174/movie-explorer.git
+cd movie-explorer
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+אחר כך פותחים בדפדפן את הכתובת http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**גרסת production:**
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build     # בדיקת טיפוסים ובניית האתר לתיקייה dist/
+npm run preview   # הצגת הגרסה שנבנתה
+```
+
+## בדיקות
+
+```bash
+npm test          # מריץ את כל הבדיקות פעם אחת
+npm run test:ui   # פותח את Vitest UI בדפדפן
+npm run lint      # בודק את הקוד עם ESLint
+```
+
+בפרויקט יש **34 בדיקות** בארבעה קבצים, וכולן בודקות לוגיקה אמיתית של האפליקציה:
+
+| קובץ | בדיקות | מה נבדק |
+|---|---|---|
+| [src/api/tvmaze.test.ts](src/api/tvmaze.test.ts) | 10 | המרת נתוני ה-API לטיפוס `Show`, טיפול בנתונים חסרים, הסרת HTML מהתקציר ובדיקת תקינות של מזהה סדרה |
+| [src/utils/showFilters.test.ts](src/utils/showFilters.test.ts) | 7 | חיפוש לפי שם, סינון לפי ז'אנר ושילוב של שניהם |
+| [src/utils/favorites.test.ts](src/utils/favorites.test.ts) | 8 | הוספה בלי כפילויות, הסרה, שמירה וטעינה מ-localStorage וטיפול בנתונים שבורים |
+| [src/utils/compare.test.ts](src/utils/compare.test.ts) | 9 | בחירה של שתי סדרות שונות, השוואת דירוגים וז'אנרים משותפים |
+
+## מבנה הפרויקט
 
 ```
+src/
+├── api/          TVmaze: כתובת ה-API, המרת הנתונים ובדיקת מזהה
+├── components/   רכיבים: ShowCard, NavBar, SearchBar, GenreFilter, FavoriteButton ועוד
+├── context/      ה-Context של המועדפים, המשותף לכל האפליקציה
+├── hooks/        useShows: טעינת רשימת הסדרות (fetch בתוך useEffect)
+├── pages/        ארבעת העמודים
+├── types/        טיפוסי TypeScript (Show, TvmazeShow)
+└── utils/        לוגיקה של חיפוש, מועדפים והשוואה, יחד עם הבדיקות שלה
+```
+
+## תהליך העבודה
+
+- **תכנון:** הדרישות נכתבו ב-[PRD.md](PRD.md), והעבודה חולקה ל-10 משימות ב-[tasks.md](tasks.md).
+- **פיתוח עם סוכן AI** (Claude Code), לפי הכללים ב-[AGENTS.md](AGENTS.md): משימה אחת בכל פעם, הסבר בסוף כל משימה, ובלי commit מצד הסוכן.
+- **יומן פרומפטים:** כל פרומפט נרשם אוטומטית ב-[PROMPTS.md](PROMPTS.md) באמצעות hook (`scripts/log-prompt.mjs`).
+- **commit נפרד** לכל משימה, אחרי בדיקה.
+
+## מגבלות ידועות
+
+- הרשימה מציגה את העמוד הראשון של TVmaze (`/shows`), כלומר 240 סדרות.
+- החיפוש, הסינון והבחירה בעמוד ההשוואה מתאפסים כשעוברים לעמוד אחר.
+- במועדפים נשמר מידע הסדרה מרגע השמירה. אם הדירוג ב-TVmaze משתנה, בעמוד המועדפים יוצג הדירוג הישן.
+
+## קרדיט
+
+נתוני הסדרות והתמונות: [TVmaze](https://www.tvmaze.com).
