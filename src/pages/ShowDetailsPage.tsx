@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import { API_BASE_URL, toShow } from '../api/tvmaze';
+import { API_BASE_URL, isValidShowId, toShow } from '../api/tvmaze';
 import ErrorMessage from '../components/ErrorMessage';
 import FavoriteButton from '../components/FavoriteButton';
 import GenreList from '../components/GenreList';
@@ -17,6 +17,9 @@ function ShowDetailsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Not a valid id (e.g. "abc") — no show can have it, so don't ask the API
+    if (!isValidShowId(id)) return;
+
     const controller = new AbortController();
 
     async function loadShow() {
@@ -58,6 +61,19 @@ function ShowDetailsPage() {
     </Link>
   );
 
+  const notFound = (
+    <section className="not-found">
+      <h1>Show not found</h1>
+      <p>There is no show with id "{id}".</p>
+      {backLink}
+    </section>
+  );
+
+  // Invalid id: show "not found" right away (no request was sent)
+  if (!isValidShowId(id)) {
+    return notFound;
+  }
+
   if (isLoading) {
     return <LoadingMessage text="Loading show..." />;
   }
@@ -74,14 +90,9 @@ function ShowDetailsPage() {
     );
   }
 
+  // Valid id, but TVmaze answered 404
   if (!show) {
-    return (
-      <section className="not-found">
-        <h1>Show not found</h1>
-        <p>There is no show with id "{id}".</p>
-        {backLink}
-      </section>
-    );
+    return notFound;
   }
 
   return (

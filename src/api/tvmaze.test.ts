@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { TvmazeShow } from '../types/tvmaze';
-import { stripHtml, toShow } from './tvmaze';
+import { isValidShowId, stripHtml, toShow } from './tvmaze';
 
 // A show exactly as the API sends it (based on https://api.tvmaze.com/shows/1).
 // Each test can override the fields it wants to check.
@@ -74,5 +74,24 @@ describe('toShow', () => {
   it('sets summary to null when the summary is missing or empty', () => {
     expect(toShow(createApiShow({ summary: null })).summary).toBeNull();
     expect(toShow(createApiShow({ summary: '' })).summary).toBeNull();
+  });
+});
+
+describe('isValidShowId', () => {
+  it('accepts whole positive numbers', () => {
+    expect(isValidShowId('169')).toBe(true);
+    expect(isValidShowId('1')).toBe(true);
+  });
+
+  it('rejects text and an empty id', () => {
+    expect(isValidShowId('abc')).toBe(false);
+    expect(isValidShowId('')).toBe(false);
+    expect(isValidShowId(undefined)).toBe(false);
+  });
+
+  it('rejects decimals, zero and negative numbers', () => {
+    expect(isValidShowId('1.5')).toBe(false);
+    expect(isValidShowId('0')).toBe(false);
+    expect(isValidShowId('-1')).toBe(false);
   });
 });
